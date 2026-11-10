@@ -14,7 +14,7 @@
 | 阶段 | 目录 | 时长 | 产出目标 | 面试题 |
 |------|------|------|----------|--------|
 | 一：核心语法 | `stage01_core/` | 3-4 周 | 2-3 个生产级命令行工具 | README 附录 |
-| 二：Web 后端 | `stage02_web/` | 4-6 周 | 1 个可部署的 FastAPI 项目 | `interview_questions.md` |
+| 二：Web 全栈 | `stage02_web/` | 4 周基础 + 1-2 周进阶 | FastAPI + Vue 3 + PostgreSQL 前后端分离项目，分别打包并用 Docker 部署 | `interview_questions.md` |
 | 三：AI 应用 | `stage03_ai/` | 4-6 周 | 1 个可评估的 RAG 应用 | `interview_questions.md` |
 | 四：数据开发 | `stage04_data/` | 4-6 周 | 1 条可靠的 ETL 管道 | 课程内嵌 |
 

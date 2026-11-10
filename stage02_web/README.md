@@ -1,65 +1,31 @@
-# 阶段二：Web 后端开发（4-6 周，生产实战版）
+# 阶段二：FastAPI + Vue 3 + PostgreSQL 全栈课程
 
-目标：独立开发一个**可以部署上线**的 FastAPI 项目，并且回答得了 `interview_questions.md` 里的问题。
+本阶段学习一个**前后端分离**的待办清单项目：FastAPI 提供 JSON API，Vue 3 负责页面，PostgreSQL 保存数据。前端与后端分别构建 Docker 镜像，再通过 Docker Compose 和数据库一起运行。建议先完成阶段一的函数、类、异常、JSON 和文件练习。
 
-## 课程安排
+## 开始前
 
-### 第一周：FastAPI 核心 + 请求处理
+- Python 3.10+、Node.js/npm、PostgreSQL；第 4 周需要 Docker Engine 与 Docker Compose。
+- 没有本机 PostgreSQL 时，可先用 `docker compose up -d db` 启动数据库。
+- 先阅读 [参考项目说明](project/README.md)，再按周学习。参考项目是最终形态；每周只关注当周的文件和功能，不要求第一天读懂全部代码。
+- 每天约 1～2 小时。四周是基础学习计划，项目打磨和进阶功能可另留 1～2 周。
 
-| 天 | 主题 | 生产要点 |
-|----|------|----------|
-| 1 | HTTP 协议：方法、状态码、Header | 语义正确的状态码（400/401/403/404/422/500 别乱用） |
-| 2 | 路由、路径参数、查询参数 | 参数校验放 Pydantic，别在函数里手写 if |
-| 3 | Pydantic 模型：请求体、响应模型 | `response_model` 过滤敏感字段（密码绝不能出现在响应里） |
-| 4 | 异常处理：HTTPException + 全局异常处理器 | 统一错误响应结构；未预期异常记日志并返回 500 |
-| 5 | 日志、配置管理（pydantic-settings） | 日志带 request_id，方便全链路排查 |
+## 四周课程
 
-**周末**：过一遍 `interview_questions.md` 第 1-4 题。
+| 周 | 每日主题 | 课程 | 本周验收 |
+|---|---|---|---|
+| 1 | HTTP、FastAPI 路由、Vue 组件、响应式、前后端请求 | [第 1 周](week01_api_vue.md) | Vue 页面能显示 API 状态 |
+| 2 | PostgreSQL、表与 SQL、ORM CRUD、Pydantic、Vue 表单 | [第 2 周](week02_postgres_crud.md) | 页面操作写入 PostgreSQL，重启后数据仍在 |
+| 3 | 输入边界、前端状态、自动化测试、PG 集成检查、安全边界 | [第 3 周](week03_quality.md) | 正常与异常 API 测试通过，能定位失败原因 |
+| 4 | 前后端分别构建、Compose 网络、PG 数据卷、部署排障 | [第 4 周](week04_docker.md) | 三个容器运行，重启后任务仍在 |
 
-### 第二周：数据库 + ORM
+## 学习方式
 
-| 天 | 主题 | 生产要点 |
-|----|------|----------|
-| 6 | SQLAlchemy 2.x 基础：Model、Session | 一次请求一个 Session（依赖注入 yield） |
-| 7 | 增删改查、分页、排序 | 分页必须有 limit，否则接口拖垮数据库 |
-| 8 | 事务边界、连接池配置 | pool_size 怎么算；MySQL 8 小时断连问题 |
-| 9 | Alembic 迁移、索引设计 | 联合索引最左匹配；EXPLAIN 看执行计划 |
-| 10 | N+1 问题、selectinload / joinedload | 开 SQL echo 自查每个接口到底发了几条 SQL |
+每天按“读概念 → 运行示例 → 自己修改 → 按验收点检查”进行。浏览器开发者工具看请求与状态码；FastAPI `/docs` 用来验证接口；`psql` 用来核对数据库。前端不直接访问 PostgreSQL，数据库密码只交给后端。
 
-**周末**：过一遍面试题第 5-9 题。
+Jupyter 适合单独试 Python 语法和 SQL 结果；本阶段的服务、Vue 页面和 Docker 操作请在终端运行，保留两个服务的日志。遇到错误时先确定是在浏览器、API 还是数据库层。
 
-### 第三周：认证 + 生产工程化
+## 基础通关与进阶
 
-| 天 | 主题 | 生产要点 |
-|----|------|----------|
-| 11 | JWT 认证：登录、签发、校验 | access + refresh 双 token；改密码后旧 token 怎么失效 |
-| 12 | 权限控制：当前用户、角色 | 所有查询强制带 user_id / tenant_id 过滤（防越权） |
-| 13 | 中间件：限流、CORS、访问日志 | Redis + Lua 限流；CORS 原理和生产配置 |
-| 14 | 缓存：Redis、穿透/击穿/雪崩 | 先写不缓存版本，压测后再加缓存 |
-| 15 | 幂等性：支付/下单接口防重复提交 | 幂等键 + Redis SETNX + 数据库唯一索引兜底 |
+基础通关：完成 CRUD、输入校验、Vue 页面、PostgreSQL 持久化、后端测试和分别构建的 Docker 镜像。此时项目适合本地学习演示，**没有登录与用户隔离，不能直接公开部署**。
 
-**周末**：过一遍面试题第 10-16 题。
-
-### 第四周：测试 + 部署 + 项目冲刺
-
-| 天 | 主题 | 生产要点 |
-|----|------|----------|
-| 16 | pytest + TestClient，测试金字塔 | 单测覆盖核心逻辑；接口测试用临时数据库 |
-| 17 | Docker 化：多阶段构建、健康检查 | 镜像里不放源码敏感信息 |
-| 18 | 部署：Gunicorn + Uvicorn worker | worker 数怎么定（CPU 密集 vs IO 密集） |
-| 19 | 监控与排障：慢查询日志、APM | 掌握"接口变慢怎么排查"的完整思路 |
-| 20 | 项目收尾：README、Swagger 文档、压测 | 项目要能被人 clone 下来就跑起来 |
-
-**周末**：模拟面试，把 20 道题全部过一遍。
-
-## 实践项目（Todo API，生产标准）
-
-不是"能跑就行"，而是满足：
-
-1. Pydantic 请求/响应模型 + 统一错误结构
-2. JWT 认证 + 垂直越权防护（只能操作自己的数据）
-3. SQLAlchemy + 分页 + 索引 + 无 N+1
-4. Redis 限流中间件
-5. pytest 覆盖核心接口的正常与异常路径
-6. Docker Compose 一键启动（api + db + redis）
-7. 日志带 request_id，慢接口能从日志定位
+进阶顺序：[面试题](interview_questions.md) → 用户登录与任务归属 → 数据库迁移 → HTTPS/备份 → 缓存、限流与监控。原有面试题是进阶复习材料，其中 Redis、JWT、生产部署等内容不作为本阶段基础通关的前置条件。
