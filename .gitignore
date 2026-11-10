@@ -3,6 +3,7 @@ __pycache__/
 *.egg-info/
 .idea/
 .vscode/
+.ipynb_checkpoints/
 .venv/
 venv/
 .env

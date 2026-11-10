@@ -32,5 +32,5 @@
 ## 环境准备
 
 - Python 3.10+（当前机器是 3.12.7，直接可用）
-- 运行方式：`python stage01_core/01_intro_variables.py`
-- 建议用 VS Code 打开本仓库，安装 Python 扩展
+- 基础语法可用 Notebook 学习：运行 `python -m notebook`，打开 `stage01_core/01_intro_variables.ipynb`；IDEA 能正常启动内核时也可直接打开。
+- 也可以运行原始脚本：`python stage01_core/01_intro_variables.py`。完整命令行项目仍使用 `.py`。
